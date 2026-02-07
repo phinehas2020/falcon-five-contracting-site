@@ -23,34 +23,62 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="Company"
-        title="About Falcon Five"
-        description="Falcon Five is structured around one promise: urgent problems get urgent action. We prioritize emergency plumbing and emergency AC repair, supported by broader contractor services that keep properties safe and operational."
+        eyebrow="About"
+        title="Built for Urgent Action"
+        description="Falcon Five exists for one reason: when something breaks, someone needs to show up fast and fix it right. That's the whole pitch."
       />
 
-      <section className="grid gap-6 lg:grid-cols-2">
-        <article className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-950">Our Operating Model</h2>
-          <ul className="mt-4 space-y-2 text-sm text-slate-700 sm:text-base">
-            <li>Rapid intake triage for emergency severity and safety risk.</li>
-            <li>Local service routing for Waco-area dispatch speed.</li>
-            <li>Diagnostics-first execution before costly replacements.</li>
-            <li>Clear scope and communication for every phase of work.</li>
-          </ul>
-        </article>
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <h2 className="text-2xl text-white sm:text-3xl">
+                How We Operate
+              </h2>
+              <ul className="mt-6 space-y-4">
+                {[
+                  "Rapid intake triage — we assess severity and safety risk on the first call.",
+                  "Local routing — Waco-area dispatch means faster arrival, not a tech driving from three counties away.",
+                  "Diagnostics first — we find the problem before we start selling you solutions.",
+                  "Clear communication — you know what's happening, what it costs, and when it's done.",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-neutral-400"
+                  >
+                    <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <article className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-950">What Makes Falcon Five Different</h2>
-          <ul className="mt-4 space-y-2 text-sm text-slate-700 sm:text-base">
-            <li>Primary focus on emergency plumbing and AC response.</li>
-            <li>City-specific support across Waco, Hewitt, and Bellmead.</li>
-            <li>Expandability for broader general contractor projects.</li>
-            <li>SEO-first digital structure designed for sustained ranking growth.</li>
-          </ul>
-        </article>
+            <div>
+              <h2 className="text-2xl text-white sm:text-3xl">
+                What Makes Us Different
+              </h2>
+              <ul className="mt-6 space-y-4">
+                {[
+                  "Emergency plumbing and AC are our core — not side gigs we do between remodels.",
+                  "City-specific support across Waco, Hewitt, Bellmead, and beyond.",
+                  "We carry the licenses, insurance, and documentation your adjuster actually needs.",
+                  "No upsells, no scare tactics. Just honest work.",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-neutral-400"
+                  >
+                    <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <CtaStrip className="mt-10" />
+      <CtaStrip />
 
       <JsonLd
         data={buildWebPageSchema({

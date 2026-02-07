@@ -7,6 +7,7 @@ export type ServiceItem = {
   commonProblems: string[];
   relatedKeywords: string[];
   faqs: Array<{ question: string; answer: string }>;
+  image?: string;
 };
 
 export type LocationItem = {
@@ -107,11 +108,12 @@ export const services: ServiceItem[] = [
           "Yes. Falcon Five handles both home and light-commercial plumbing emergencies throughout the Waco metro area.",
       },
       {
-        question: "Can you help with insurance documentation?",
+        question: "Can you help with documentation?",
         answer:
           "Yes. We document issue origin, mitigation steps, and repair notes so your adjuster has clear records.",
       },
     ],
+    image: "/images/service-plumbing.png",
   },
   {
     slug: "air-conditioning-repair",
@@ -154,6 +156,7 @@ export const services: ServiceItem[] = [
           "Yes. Our team services common residential and light-commercial cooling equipment types.",
       },
     ],
+    image: "/images/service-ac.png",
   },
   {
     slug: "water-heater-repair-installation",
@@ -196,6 +199,7 @@ export const services: ServiceItem[] = [
           "Yes. We remove and dispose of old units after installation.",
       },
     ],
+    image: "/images/service-water-heater.png",
   },
   {
     slug: "drain-sewer-services",
@@ -238,6 +242,7 @@ export const services: ServiceItem[] = [
           "Yes. We can set preventive service intervals for high-use or historically problematic lines.",
       },
     ],
+    image: "/images/service-drain.png",
   },
   {
     slug: "general-contractor-services",
@@ -280,6 +285,7 @@ export const services: ServiceItem[] = [
           "Yes. Every project starts with clear scope, assumptions, and execution milestones.",
       },
     ],
+    image: "/images/service-contracting.png",
   },
 ];
 

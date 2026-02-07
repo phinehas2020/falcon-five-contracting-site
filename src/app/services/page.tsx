@@ -28,42 +28,67 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Service Directory"
-        title="Falcon Five Services"
-        description="This SEO scaffold separates each service into its own intent-focused landing page so each page can target stronger local search queries and conversion actions."
+        eyebrow="Services"
+        title="What We Do"
+        description="Emergency plumbing, AC repair, water heaters, drains, and general contracting. Every service built around one thing: getting there fast and fixing it right."
       />
 
-      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {services.map((service) => (
-          <article key={service.slug} className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">{service.name}</h2>
-            <p className="mt-2 text-sm text-slate-700">{service.shortDescription}</p>
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="divide-y divide-rule">
+            {services.map((service, index) => (
+              <article key={service.slug} className="py-10 sm:py-14">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-12">
+                  <div className="lg:flex-1">
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-display text-3xl text-neutral-700">
+                        0{index + 1}
+                      </span>
+                      <h2 className="text-3xl text-white sm:text-4xl">
+                        {service.name}
+                      </h2>
+                    </div>
+                    <p className="mt-4 max-w-xl text-neutral-400">
+                      {service.shortDescription}
+                    </p>
+                  </div>
 
-            <h3 className="mt-4 text-sm font-black uppercase tracking-wide text-amber-700">
-              Common Problems
-            </h3>
-            <ul className="mt-2 space-y-1 text-sm text-slate-700">
-              {service.commonProblems.slice(0, 3).map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-
-            <Link
-              href={`/services/${service.slug}`}
-              className="mt-5 inline-flex rounded-full bg-slate-950 px-4 py-2 text-xs font-black uppercase tracking-wide text-white hover:bg-slate-800"
-            >
-              View Service Page
-            </Link>
-          </article>
-        ))}
+                  <div className="lg:w-80">
+                    <p className="text-xs font-bold uppercase text-gold">
+                      Common Problems
+                    </p>
+                    <ul className="mt-3 space-y-2">
+                      {service.commonProblems.slice(0, 3).map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 text-sm text-neutral-400"
+                        >
+                          <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="mt-6 inline-flex bg-surface-raised px-5 py-2.5 text-sm font-bold text-white transition-colors hover:text-gold"
+                    >
+                      Learn more
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <CtaStrip className="mt-10" />
+      <CtaStrip />
 
       <JsonLd
         data={buildWebPageSchema({
           name: "Falcon Five Services",
-          description: "Service directory for Falcon Five emergency and contractor services.",
+          description:
+            "Service directory for Falcon Five emergency and contractor services.",
           path: "/services",
         })}
       />

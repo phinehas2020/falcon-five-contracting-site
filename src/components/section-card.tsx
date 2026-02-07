@@ -7,10 +7,11 @@ type SectionCardProps = {
 
 export function SectionCard({ title, children }: SectionCardProps) {
   return (
-    <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-      <h2 className="text-2xl font-black tracking-tight text-slate-900">{title}</h2>
-      <div className="mt-4 space-y-4 text-sm text-slate-700 sm:text-base">{children}</div>
+    <section className="border border-rule bg-surface-raised p-6 sm:p-8">
+      <h2 className="text-2xl text-white sm:text-3xl">{title}</h2>
+      <div className="mt-5 space-y-4 text-sm text-neutral-400 sm:text-base">
+        {children}
+      </div>
     </section>
   );
 }
-

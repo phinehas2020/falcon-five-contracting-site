@@ -23,7 +23,9 @@ export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BlogDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -43,7 +45,9 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
   });
 }
 
-export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
+export default async function BlogDetailPage({
+  params,
+}: BlogDetailPageProps) {
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -70,69 +74,104 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   return (
     <>
       <PageHero
-        eyebrow="SEO Content Scaffold"
+        eyebrow="Insights"
         title={post.title}
         description={post.description}
       />
 
-      <article className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-950">Primary Keyword Target</h2>
-          <p className="mt-3 text-base font-semibold text-amber-700">{post.targetKeyword}</p>
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+            {/* Main content */}
+            <div className="space-y-10">
+              <div>
+                <p className="text-xs font-bold uppercase text-gold">
+                  Primary Keyword
+                </p>
+                <p className="mt-2 text-lg font-bold text-white">
+                  {post.targetKeyword}
+                </p>
+              </div>
 
-          <h2 className="mt-6 text-2xl font-black text-slate-950">Suggested Outline</h2>
-          <ol className="mt-3 space-y-2 text-sm text-slate-700 sm:text-base">
-            {post.outline.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ol>
-
-          <h2 className="mt-6 text-2xl font-black text-slate-950">Internal Linking Targets</h2>
-          <ul className="mt-3 space-y-2 text-sm text-slate-700 sm:text-base">
-            <li>
-              Link to <Link href="/services/emergency-plumbing" className="font-bold text-slate-900">Emergency Plumbing</Link>
-            </li>
-            <li>
-              Link to <Link href="/services/air-conditioning-repair" className="font-bold text-slate-900">Air Conditioning Repair</Link>
-            </li>
-            <li>
-              Link to <Link href="/locations/waco-tx" className="font-bold text-slate-900">Waco City Page</Link>
-            </li>
-          </ul>
-        </section>
-
-        <aside className="space-y-5">
-          <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">Production Notes</h2>
-            <ul className="mt-3 space-y-2 text-sm text-slate-700">
-              <li>Target 1,200–1,800 words per article for topical depth.</li>
-              <li>Use custom photos from real jobs when available.</li>
-              <li>Embed FAQ sections based on field questions.</li>
-              <li>Add clear emergency CTA blocks every 300–400 words.</li>
-            </ul>
-          </section>
-
-          <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">More Articles</h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              {blogPosts
-                .filter((entry) => entry.slug !== post.slug)
-                .map((entry) => (
-                  <li key={entry.slug}>
-                    <Link
-                      href={`/blog/${entry.slug}`}
-                      className="font-semibold text-slate-900 underline decoration-amber-400 decoration-2 underline-offset-4"
+              <div>
+                <h2 className="text-2xl text-white sm:text-3xl">
+                  Article Outline
+                </h2>
+                <ol className="mt-5 space-y-3">
+                  {post.outline.map((line, i) => (
+                    <li
+                      key={line}
+                      className="flex items-start gap-4 text-neutral-400"
                     >
-                      {entry.title}
+                      <span className="font-display text-2xl text-gold/40">
+                        {i + 1}
+                      </span>
+                      <span className="pt-1">{line}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div>
+                <h2 className="text-2xl text-white sm:text-3xl">
+                  Internal Links
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  <li>
+                    <Link
+                      href="/services/emergency-plumbing"
+                      className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
+                    >
+                      Emergency Plumbing
                     </Link>
                   </li>
-                ))}
-            </ul>
-          </section>
-        </aside>
-      </article>
+                  <li>
+                    <Link
+                      href="/services/air-conditioning-repair"
+                      className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
+                    >
+                      Air Conditioning Repair
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/locations/waco-tx"
+                      className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
+                    >
+                      Waco, TX Service Area
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
-      <CtaStrip className="mt-10" />
+            {/* Sidebar */}
+            <aside className="space-y-8">
+              <div className="border border-rule bg-surface-raised p-6 sm:p-8">
+                <h2 className="text-xl text-white sm:text-2xl">
+                  More Articles
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {blogPosts
+                    .filter((entry) => entry.slug !== post.slug)
+                    .map((entry) => (
+                      <li key={entry.slug}>
+                        <Link
+                          href={`/blog/${entry.slug}`}
+                          className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
+                        >
+                          {entry.title}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <CtaStrip />
 
       <JsonLd
         data={buildWebPageSchema({

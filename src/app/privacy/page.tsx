@@ -8,7 +8,8 @@ import {
 
 export const metadata = buildMetadata({
   title: "Privacy Policy",
-  description: "Privacy policy scaffold for Falcon Five website and lead intake forms.",
+  description:
+    "Privacy policy for the Falcon Five website and service request forms.",
   path: "/privacy",
 });
 
@@ -17,24 +18,30 @@ export default function PrivacyPage() {
     <>
       <PageHero
         title="Privacy Policy"
-        description="This is a legal scaffold for Falcon Five. Replace with attorney-reviewed policy language before production launch."
+        description="How we handle your information when you use our website or request service."
       />
 
-      <section className="rounded-2xl border border-black/10 bg-white p-6 text-sm text-slate-700 shadow-sm sm:text-base">
-        <p>
-          Falcon Five may collect contact information submitted through website forms and call tracking
-          systems to respond to service requests.
-        </p>
-        <p className="mt-3">
-          Placeholder sections to finalize: data retention, cookie policy, analytics usage, communication
-          consent, and deletion request process.
-        </p>
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="max-w-2xl space-y-4 text-sm text-neutral-400 sm:text-base">
+            <p>
+              Falcon Five may collect contact information submitted through
+              website forms and call tracking systems to respond to service
+              requests.
+            </p>
+            <p>
+              Placeholder sections to finalize: data retention, cookie policy,
+              analytics usage, communication consent, and deletion request
+              process.
+            </p>
+          </div>
+        </div>
       </section>
 
       <JsonLd
         data={buildWebPageSchema({
           name: "Falcon Five Privacy Policy",
-          description: "Privacy policy scaffold page",
+          description: "Privacy policy page",
           path: "/privacy",
         })}
       />

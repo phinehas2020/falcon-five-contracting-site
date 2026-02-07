@@ -17,8 +17,8 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(135deg, #020617 0%, #0f172a 55%, #334155 100%)",
-          color: "#f8fafc",
+          background: "#0a0a0a",
+          color: "#f0ece4",
           padding: 64,
         }}
       >
@@ -28,20 +28,31 @@ export default function OpenGraphImage() {
             fontWeight: 900,
             letterSpacing: 2,
             textTransform: "uppercase",
-            color: "#fbbf24",
+            color: "#d4a853",
           }}
         >
           Falcon Five
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div style={{ fontSize: 88, fontWeight: 900, lineHeight: 1 }}>Emergency Plumbing</div>
-          <div style={{ fontSize: 58, fontWeight: 800, lineHeight: 1 }}>AC Repair • Waco, TX</div>
+          <div style={{ fontSize: 88, fontWeight: 900, lineHeight: 1 }}>
+            Emergency Plumbing
+          </div>
+          <div style={{ fontSize: 58, fontWeight: 800, lineHeight: 1 }}>
+            AC Repair &bull; Waco, TX
+          </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 30 }}>
-          <div>24/7 Dispatch</div>
-          <div>Waco • Hewitt • Bellmead</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: 30,
+            color: "#8a8580",
+          }}
+        >
+          <div style={{ color: "#d4a853" }}>24/7 Dispatch</div>
+          <div>Waco &bull; Hewitt &bull; Bellmead</div>
         </div>
       </div>
     ),

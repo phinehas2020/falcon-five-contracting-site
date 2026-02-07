@@ -27,35 +27,47 @@ export default function BlogIndexPage() {
   return (
     <>
       <PageHero
-        eyebrow="Topical Authority Hub"
-        title="Falcon Five Insights"
-        description="These pages are structured for organic search growth: each article targets one high-intent keyword cluster and links to the matching service and location pages."
+        eyebrow="Insights"
+        title="Knowledge Is Leverage"
+        description="Emergency checklists, repair-vs-replace guides, and homeowner education from the field. Know more, spend less."
       />
 
-      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {blogPosts.map((post) => (
-          <article key={post.slug} className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-wide text-amber-700">
-              {post.targetKeyword}
-            </p>
-            <h2 className="mt-2 text-2xl font-black text-slate-950">{post.title}</h2>
-            <p className="mt-2 text-sm text-slate-700">{post.description}</p>
-            <Link
-              href={`/blog/${post.slug}`}
-              className="mt-4 inline-flex rounded-full bg-slate-950 px-4 py-2 text-xs font-black uppercase tracking-wide text-white hover:bg-slate-800"
-            >
-              View Scaffold
-            </Link>
-          </article>
-        ))}
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-px bg-rule sm:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.map((post) => (
+              <article
+                key={post.slug}
+                className="group bg-surface p-6 sm:p-8"
+              >
+                <p className="text-xs font-bold uppercase text-gold/60">
+                  {post.targetKeyword}
+                </p>
+                <h2 className="mt-3 text-xl text-white transition-colors group-hover:text-gold sm:text-2xl">
+                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                </h2>
+                <p className="mt-3 text-sm text-neutral-500">
+                  {post.description}
+                </p>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="mt-5 inline-flex text-sm font-bold text-neutral-400 transition-colors hover:text-gold"
+                >
+                  Read article
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <CtaStrip className="mt-10" />
+      <CtaStrip />
 
       <JsonLd
         data={buildWebPageSchema({
           name: "Falcon Five Insights",
-          description: "Educational content and search-intent blog architecture for Falcon Five.",
+          description:
+            "Educational content and search-intent blog architecture for Falcon Five.",
           path: "/blog",
         })}
       />

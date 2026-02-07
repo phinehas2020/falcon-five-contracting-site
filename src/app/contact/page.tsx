@@ -38,113 +38,159 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        title="Request Service"
-        description="Use this page as the primary conversion endpoint for calls and form submissions. Keep phone CTA visible and prioritize emergency intake details in the form."
+        title="Get In Touch"
+        description="For active emergencies, call us directly. For everything else, fill out the form and we'll get back to you."
       />
 
-      <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <article className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-950">Emergency Dispatch</h2>
-          <p className="mt-3 text-sm text-slate-700 sm:text-base">
-            For active leaks, no-cooling emergencies, and urgent contractor calls, use phone dispatch for
-            fastest triage.
-          </p>
-          <a
-            href={siteConfig.phoneHref}
-            className="mt-5 inline-flex rounded-full bg-amber-400 px-5 py-3 text-sm font-black text-slate-950 hover:bg-amber-300"
-          >
-            Call {siteConfig.phoneDisplay}
-          </a>
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            {/* Contact info */}
+            <div>
+              <h2 className="text-2xl text-white sm:text-3xl">
+                Emergency Dispatch
+              </h2>
+              <p className="mt-4 text-neutral-400">
+                For active leaks, no-cooling emergencies, and urgent contractor
+                calls, phone dispatch is the fastest path.
+              </p>
+              <a
+                href={siteConfig.phoneHref}
+                className="mt-6 inline-flex items-center gap-2 bg-gold px-6 py-3 text-base font-bold text-black transition-colors hover:bg-gold-bright"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="size-5"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Call {siteConfig.phoneDisplay}
+              </a>
 
-          <div className="mt-6 space-y-2 text-sm text-slate-700">
-            <p>
-              <span className="font-bold">Email:</span> {siteConfig.email}
-            </p>
-            <p>
-              <span className="font-bold">Address:</span> {siteConfig.primaryAddress.streetAddress},{" "}
-              {siteConfig.primaryAddress.addressLocality}, {siteConfig.primaryAddress.addressRegion}{" "}
-              {siteConfig.primaryAddress.postalCode}
-            </p>
-            <p>
-              <span className="font-bold">Coverage:</span> {siteConfig.areas.join(", ")}
-            </p>
+              <div className="mt-10 space-y-4 border-t border-rule pt-8 text-sm text-neutral-400">
+                <div>
+                  <p className="text-xs font-bold uppercase text-neutral-500">
+                    Email
+                  </p>
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="mt-1 text-gold transition-colors hover:text-gold-bright"
+                  >
+                    {siteConfig.email}
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase text-neutral-500">
+                    Address
+                  </p>
+                  <p className="mt-1">
+                    {siteConfig.primaryAddress.streetAddress},{" "}
+                    {siteConfig.primaryAddress.addressLocality},{" "}
+                    {siteConfig.primaryAddress.addressRegion}{" "}
+                    {siteConfig.primaryAddress.postalCode}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase text-neutral-500">
+                    Coverage
+                  </p>
+                  <p className="mt-1">{siteConfig.areas.join(", ")}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Form */}
+            <div className="border border-rule bg-surface-raised p-6 sm:p-8">
+              <h2 className="text-2xl text-white sm:text-3xl">
+                Request Service
+              </h2>
+              <p className="mt-3 text-sm text-neutral-500">
+                Tell us what&apos;s going on and we&apos;ll get back to you.
+              </p>
+
+              <form className="mt-6 grid gap-5" action="#" method="post">
+                <label className="grid gap-2 text-sm font-medium text-neutral-300">
+                  Full Name
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Jane Smith"
+                    className="h-12 border border-rule bg-surface px-4 text-sm text-white placeholder:text-neutral-600"
+                  />
+                </label>
+
+                <label className="grid gap-2 text-sm font-medium text-neutral-300">
+                  Phone Number
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="(254) 555-0105"
+                    className="h-12 border border-rule bg-surface px-4 text-sm text-white placeholder:text-neutral-600"
+                  />
+                </label>
+
+                <label className="grid gap-2 text-sm font-medium text-neutral-300">
+                  Service Type
+                  <select
+                    name="serviceType"
+                    className="h-12 border border-rule bg-surface px-4 text-sm text-white"
+                  >
+                    <option>Emergency Plumbing</option>
+                    <option>Air Conditioning Repair</option>
+                    <option>Water Heater Service</option>
+                    <option>Drain &amp; Sewer Service</option>
+                    <option>General Contractor Service</option>
+                  </select>
+                </label>
+
+                <label className="grid gap-2 text-sm font-medium text-neutral-300">
+                  Service City
+                  <select
+                    name="city"
+                    className="h-12 border border-rule bg-surface px-4 text-sm text-white"
+                  >
+                    {siteConfig.areas.map((city) => (
+                      <option key={city}>{city}</option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="grid gap-2 text-sm font-medium text-neutral-300">
+                  What&apos;s happening?
+                  <textarea
+                    name="message"
+                    rows={4}
+                    placeholder="Describe the issue and urgency."
+                    className="border border-rule bg-surface px-4 py-3 text-sm text-white placeholder:text-neutral-600"
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  className="h-12 bg-gold text-sm font-bold text-black transition-colors hover:bg-gold-bright"
+                >
+                  Submit Request
+                </button>
+              </form>
+            </div>
           </div>
-        </article>
-
-        <article className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-950">Service Request Form (Scaffold)</h2>
-          <p className="mt-3 text-sm text-slate-700">
-            This form is intentionally scaffolded for your next design/implementation pass. It currently
-            represents field structure and conversion flow, without backend submission wiring.
-          </p>
-
-          <form className="mt-5 grid gap-4" action="#" method="post">
-            <label className="grid gap-2 text-sm font-semibold text-slate-800">
-              Full Name
-              <input
-                type="text"
-                name="name"
-                placeholder="Jane Smith"
-                className="h-11 rounded-lg border border-black/15 bg-white px-3 text-sm"
-              />
-            </label>
-
-            <label className="grid gap-2 text-sm font-semibold text-slate-800">
-              Phone Number
-              <input
-                type="tel"
-                name="phone"
-                placeholder="(254) 555-0105"
-                className="h-11 rounded-lg border border-black/15 bg-white px-3 text-sm"
-              />
-            </label>
-
-            <label className="grid gap-2 text-sm font-semibold text-slate-800">
-              Service Type
-              <select name="serviceType" className="h-11 rounded-lg border border-black/15 bg-white px-3 text-sm">
-                <option>Emergency Plumbing</option>
-                <option>Air Conditioning Repair</option>
-                <option>Water Heater Service</option>
-                <option>Drain & Sewer Service</option>
-                <option>General Contractor Service</option>
-              </select>
-            </label>
-
-            <label className="grid gap-2 text-sm font-semibold text-slate-800">
-              Service City
-              <select name="city" className="h-11 rounded-lg border border-black/15 bg-white px-3 text-sm">
-                {siteConfig.areas.map((city) => (
-                  <option key={city}>{city}</option>
-                ))}
-              </select>
-            </label>
-
-            <label className="grid gap-2 text-sm font-semibold text-slate-800">
-              What’s happening?
-              <textarea
-                name="message"
-                rows={4}
-                placeholder="Describe the issue, urgency, and best callback time."
-                className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm"
-              />
-            </label>
-
-            <button
-              type="submit"
-              className="h-11 rounded-full bg-slate-950 text-sm font-black uppercase tracking-wide text-white hover:bg-slate-800"
-            >
-              Submit Request (UI Scaffold)
-            </button>
-          </form>
-        </article>
+        </div>
       </section>
 
-      <CtaStrip className="mt-10" />
+      <CtaStrip />
 
       <JsonLd
         data={buildWebPageSchema({
           name: "Contact Falcon Five",
-          description: "Contact page and service request scaffold for Falcon Five.",
+          description:
+            "Contact page and service request scaffold for Falcon Five.",
           path: "/contact",
         })}
       />

@@ -48,7 +48,9 @@ export async function generateMetadata({
   });
 }
 
-export default async function LocationDetailPage({ params }: LocationDetailPageProps) {
+export default async function LocationDetailPage({
+  params,
+}: LocationDetailPageProps) {
   const { slug } = await params;
   const location = getLocationBySlug(slug);
 
@@ -59,72 +61,103 @@ export default async function LocationDetailPage({ params }: LocationDetailPageP
   return (
     <>
       <PageHero
-        eyebrow="Local Market Page"
-        title={`${location.city}, ${location.region} Emergency Service`}
-        description={`Falcon Five provides emergency plumbing, air conditioning repair, and broader contractor support throughout ${location.city}. Calls are triaged by urgency and routed for the fastest possible response window.`}
+        eyebrow={`${location.city}, ${location.region}`}
+        title={`Emergency Service in ${location.city}`}
+        description={`Falcon Five provides emergency plumbing, air conditioning repair, and contractor support throughout ${location.city}. Calls are triaged by urgency and routed for the fastest possible response.`}
       />
 
-      <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-        <article className="space-y-6 rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-          <div>
-            <h2 className="text-2xl font-black text-slate-950">
-              Service Coverage in {location.city}
-            </h2>
-            <p className="mt-3 text-sm text-slate-700 sm:text-base">{location.summary}</p>
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+            {/* Main content */}
+            <div className="space-y-12">
+              <div>
+                <h2 className="text-2xl text-white sm:text-3xl">
+                  Coverage in {location.city}
+                </h2>
+                <p className="mt-4 text-neutral-400">{location.summary}</p>
+              </div>
+
+              <div>
+                <h2 className="text-2xl text-white sm:text-3xl">
+                  Neighborhoods We Serve
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {location.neighborhoods.map((neighborhood) => (
+                    <li
+                      key={neighborhood}
+                      className="flex items-start gap-3 text-neutral-400"
+                    >
+                      <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                      {neighborhood}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-2xl text-white sm:text-3xl">
+                  Emergency Response
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {[
+                    "Active leaks and burst pipe containment",
+                    "No-cooling and unsafe indoor temperature response",
+                    "Main line drain and sewer interruption triage",
+                    "Critical plumbing and mechanical repair coordination",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-neutral-400"
+                    >
+                      <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <aside className="space-y-8">
+              <div className="border border-rule bg-surface-raised p-6 sm:p-8">
+                <h2 className="text-xl text-white sm:text-2xl">
+                  Available Services
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {services.map((service) => (
+                    <li key={service.slug}>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
+                      >
+                        {service.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="border border-rule bg-surface-raised p-6 sm:p-8">
+                <h2 className="text-xl text-white sm:text-2xl">
+                  Nearby Communities
+                </h2>
+                <p className="mt-4 text-sm text-neutral-400">
+                  {location.nearby.join(" / ")}
+                </p>
+                <Link
+                  href="/locations"
+                  className="mt-4 inline-flex text-sm font-bold text-gold transition-colors hover:text-gold-bright"
+                >
+                  All locations
+                </Link>
+              </div>
+            </aside>
           </div>
-
-          <div>
-            <h2 className="text-2xl font-black text-slate-950">Neighborhood Focus</h2>
-            <ul className="mt-3 space-y-2 text-sm text-slate-700 sm:text-base">
-              {location.neighborhoods.map((neighborhood) => (
-                <li key={neighborhood}>{neighborhood}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-black text-slate-950">Emergency Response Scope</h2>
-            <ul className="mt-3 space-y-2 text-sm text-slate-700 sm:text-base">
-              <li>Active leaks and burst pipe containment</li>
-              <li>No-cooling and unsafe indoor temperature response</li>
-              <li>Main line drain and sewer interruption triage</li>
-              <li>Critical plumbing + mechanical repair coordination</li>
-            </ul>
-          </div>
-        </article>
-
-        <aside className="space-y-5">
-          <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">Available Services</h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              {services.map((service) => (
-                <li key={service.slug}>
-                  <Link
-                    href={`/services/${service.slug}`}
-                    className="font-semibold text-slate-900 underline decoration-amber-400 decoration-2 underline-offset-4"
-                  >
-                    {service.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">Nearby Communities</h2>
-            <p className="mt-3 text-sm text-slate-700">{location.nearby.join(" • ")}</p>
-            <Link
-              href="/locations"
-              className="mt-4 inline-flex text-sm font-black text-amber-700 hover:text-amber-600"
-            >
-              Explore all locations
-            </Link>
-          </section>
-        </aside>
+        </div>
       </section>
 
       <CtaStrip
-        className="mt-10"
         title={`Need emergency help in ${location.city}?`}
         description={`Call Falcon Five for 24/7 dispatch coverage in ${location.city}, ${location.region}.`}
       />
@@ -140,7 +173,10 @@ export default async function LocationDetailPage({ params }: LocationDetailPageP
         data={buildBreadcrumbSchema([
           { name: "Home", item: "/" },
           { name: "Locations", item: "/locations" },
-          { name: `${location.city}, ${location.region}`, item: `/locations/${location.slug}` },
+          {
+            name: `${location.city}, ${location.region}`,
+            item: `/locations/${location.slug}`,
+          },
         ])}
       />
     </>

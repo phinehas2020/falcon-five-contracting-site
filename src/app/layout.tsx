@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Source_Sans_3 } from "next/font/google";
+import { Bebas_Neue, DM_Sans } from "next/font/google";
 
 import "./globals.css";
 
@@ -15,7 +15,7 @@ const headingFont = Bebas_Neue({
   variable: "--font-heading",
 });
 
-const bodyFont = Source_Sans_3({
+const bodyFont = DM_Sans({
   subsets: ["latin"],
   variable: "--font-body",
 });
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#020617",
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({
@@ -57,19 +57,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-US">
-      <body className={`${headingFont.variable} ${bodyFont.variable} bg-slate-50 text-slate-900 antialiased`}>
+      <body
+        className={`${headingFont.variable} ${bodyFont.variable} bg-surface text-foreground antialiased`}
+      >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-bold"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-gold focus:px-3 focus:py-2 focus:text-sm focus:font-bold focus:text-black"
         >
           Skip to main content
         </a>
 
         <SiteHeader />
 
-        <main id="main-content" className="mx-auto w-full max-w-6xl px-5 pb-16 sm:px-6 lg:px-8">
-          {children}
-        </main>
+        <main id="main-content">{children}</main>
 
         <SiteFooter />
 

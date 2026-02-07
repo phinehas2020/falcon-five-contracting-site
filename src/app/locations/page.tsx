@@ -28,32 +28,38 @@ export default function LocationsPage() {
     <>
       <PageHero
         eyebrow="Coverage"
-        title="Falcon Five Service Areas"
-        description="Each city page is structured to target local-intent searches and give customers clear, city-specific context for emergency dispatch coverage."
+        title="Where We Work"
+        description="Emergency dispatch routing across Central Texas. Every community gets the same speed, the same standard, and the same team."
       />
 
-      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {locations.map((location) => (
-          <article key={location.slug} className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">
-              {location.city}, {location.region}
-            </h2>
-            <p className="mt-2 text-sm text-slate-700">{location.summary}</p>
-
-            <h3 className="mt-4 text-xs font-black uppercase tracking-wide text-amber-700">Nearby</h3>
-            <p className="mt-2 text-sm text-slate-600">{location.nearby.join(" • ")}</p>
-
-            <Link
-              href={`/locations/${location.slug}`}
-              className="mt-5 inline-flex rounded-full bg-slate-950 px-4 py-2 text-xs font-black uppercase tracking-wide text-white hover:bg-slate-800"
-            >
-              View {location.city} Page
-            </Link>
-          </article>
-        ))}
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-px bg-rule sm:grid-cols-2 lg:grid-cols-3">
+            {locations.map((location) => (
+              <Link
+                key={location.slug}
+                href={`/locations/${location.slug}`}
+                className="group bg-surface p-6 transition-colors hover:bg-surface-raised sm:p-8"
+              >
+                <h2 className="text-2xl text-white transition-colors group-hover:text-gold sm:text-3xl">
+                  {location.city}
+                </h2>
+                <p className="mt-1 text-xs font-bold uppercase text-neutral-600">
+                  {location.region}
+                </p>
+                <p className="mt-3 text-sm text-neutral-500">
+                  {location.summary}
+                </p>
+                <p className="mt-4 text-xs text-neutral-600">
+                  Nearby: {location.nearby.join(", ")}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <CtaStrip className="mt-10" />
+      <CtaStrip />
 
       <JsonLd
         data={buildWebPageSchema({
