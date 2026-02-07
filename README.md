@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Falcon Five Website Scaffold (SEO-First)
 
-## Getting Started
+This repository contains a production-ready **Next.js App Router scaffold** for a local service contractor:
+- Emergency Plumbing
+- Emergency Air Conditioning Repair
+- General Contractor Services
 
-First, run the development server:
+Primary target markets:
+- Waco, TX
+- Hewitt, TX
+- Bellmead, TX (user-entered as "Belmade")
+- Surrounding Central Texas communities
+
+---
+
+## Stack
+
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Structured data (JSON-LD)
+- Dynamic SEO routes (`sitemap.xml`, `robots.txt`, Open Graph image)
+
+---
+
+## What’s Scaffolded
+
+### Site Architecture
+
+- `/` Home
+- `/services`
+- `/services/[slug]` (all core services generated from data)
+- `/locations`
+- `/locations/[slug]` (city landing pages)
+- `/blog`
+- `/blog/[slug]` (SEO article scaffolds)
+- `/about`
+- `/contact`
+- `/privacy`
+- `/terms`
+- `not-found`
+
+### Technical SEO
+
+- Canonical URLs on all pages
+- Route-level metadata and keywords
+- Open Graph + Twitter metadata
+- LocalBusiness + Service + FAQ + Breadcrumb schema
+- Auto-generated `sitemap.xml`
+- Auto-generated `robots.txt`
+- Generated social card via `opengraph-image`
+
+### Content Model
+
+All service pages, city pages, and blog pages are data-driven from:
+- `src/lib/site-data.ts`
+
+This makes future scaling easy (new cities/services = add one data object).
+
+---
+
+## Local Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build and lint:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm lint
+pnpm build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env.local` and update values:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_PHONE_DISPLAY`
+- `NEXT_PUBLIC_PHONE_HREF`
+- `NEXT_PUBLIC_EMAIL`
+- address fields
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Competitor Signals Used for Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Research focused on pages currently ranking for emergency plumbing and AC intent in Waco/Hewitt market. Common winning patterns found:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. 24/7 urgency language in title/meta/H1
+2. Highly visible call CTA above fold
+3. City-specific pages and service-area clusters
+4. Trust signals: licensed/insured, years in business, reviews
+5. FAQ and “what to do now” emergency content blocks
+
+This scaffold mirrors those patterns while keeping cleaner content hierarchy and stronger internal linking.
+
+---
+
+## Recommended Next Phase (Design + Growth)
+
+1. Apply final visual design system (Claude Opus pass)
+2. Add real NAP details and verified license numbers
+3. Replace blog scaffolds with fully written articles
+4. Connect contact form to CRM + call tracking
+5. Add Google Business Profile link, review embeds, and photos
+6. Launch local backlinks + citations campaign
+
