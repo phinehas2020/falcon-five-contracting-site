@@ -107,13 +107,11 @@ export default function ContactPage() {
               </div>
             </div>
 
+            {/* Form */}
+            <ContactForm />
           </div>
-
-          {/* Form */}
-          <ContactForm />
         </div>
-      </div>
-    </section >
+      </section>
 
       <CtaStrip />
 
