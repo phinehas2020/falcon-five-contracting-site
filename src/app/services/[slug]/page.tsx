@@ -12,7 +12,7 @@ import {
   buildServiceSchema,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { getServiceBySlug, services } from "@/lib/site-data";
+import { getServiceBySlug, getServices } from "@/lib/sanity-fetch";
 
 type ServiceDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -20,17 +20,17 @@ type ServiceDetailPageProps = {
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const services = await getServices();
   return services.map((service) => ({ slug: service.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: ServiceDetailPageProps): Promise<Metadata> {
+params,
+}: ServiceDetailPageProps): Promise < Metadata > {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getServiceBySlug(slug);
 
-  if (!service) {
+  if(!service) {
     return buildMetadata({
       title: "Service Not Found",
       description: "Requested service page was not found.",
@@ -50,7 +50,8 @@ export default async function ServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getServiceBySlug(slug);
+  const services = await getServices(); // Fetch all services for the sidebar
 
   if (!service) {
     notFound();

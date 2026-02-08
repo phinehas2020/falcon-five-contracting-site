@@ -11,7 +11,7 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { blogPosts, getBlogPostBySlug } from "@/lib/site-data";
+import { getBlogPostBySlug, getBlogPosts } from "@/lib/sanity-fetch";
 
 type BlogDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -19,17 +19,17 @@ type BlogDetailPageProps = {
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const blogPosts = await getBlogPosts();
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: BlogDetailPageProps): Promise<Metadata> {
+params,
+}: BlogDetailPageProps): Promise < Metadata > {
   const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await getBlogPostBySlug(slug);
 
-  if (!post) {
+  if(!post) {
     return buildMetadata({
       title: "Article Not Found",
       description: "Requested article was not found.",
@@ -49,7 +49,8 @@ export default async function BlogDetailPage({
   params,
 }: BlogDetailPageProps) {
   const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await getBlogPostBySlug(slug);
+  const blogPosts = await getBlogPosts(); // Fetch all posts for sidebar
 
   if (!post) {
     notFound();

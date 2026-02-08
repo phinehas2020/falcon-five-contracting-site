@@ -7,8 +7,9 @@ import {
   buildBreadcrumbSchema,
   buildMetadata,
   buildWebPageSchema,
+  buildWebPageSchema,
 } from "@/lib/seo";
-import { blogPosts } from "@/lib/site-data";
+import { getBlogPosts } from "@/lib/sanity-fetch";
 
 export const metadata = buildMetadata({
   title: "Insights",
@@ -23,7 +24,8 @@ export const metadata = buildMetadata({
   ],
 });
 
-export default function BlogIndexPage() {
+export default async function BlogIndexPage() {
+  const blogPosts = await getBlogPosts();
   return (
     <>
       <PageHero

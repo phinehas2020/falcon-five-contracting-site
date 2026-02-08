@@ -10,7 +10,7 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { getLocationBySlug, locations, services } from "@/lib/site-data";
+import { getLocationBySlug, getLocations, getServices } from "@/lib/sanity-fetch";
 
 type LocationDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -18,17 +18,17 @@ type LocationDetailPageProps = {
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const locations = await getLocations();
   return locations.map((location) => ({ slug: location.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: LocationDetailPageProps): Promise<Metadata> {
+params,
+}: LocationDetailPageProps): Promise < Metadata > {
   const { slug } = await params;
-  const location = getLocationBySlug(slug);
+  const location = await getLocationBySlug(slug);
 
-  if (!location) {
+  if(!location) {
     return buildMetadata({
       title: "Location Not Found",
       description: "Requested location page was not found.",
@@ -52,7 +52,8 @@ export default async function LocationDetailPage({
   params,
 }: LocationDetailPageProps) {
   const { slug } = await params;
-  const location = getLocationBySlug(slug);
+  const location = await getLocationBySlug(slug);
+  const services = await getServices();
 
   if (!location) {
     notFound();

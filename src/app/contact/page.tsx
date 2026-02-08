@@ -7,6 +7,7 @@ import {
   buildWebPageSchema,
 } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-data";
+import { ContactForm } from "@/components/contact-form";
 
 export const metadata = buildMetadata({
   title: "Contact",
@@ -106,83 +107,16 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Form */}
-            <div className="border border-rule bg-surface-raised p-6 sm:p-8">
-              <h2 className="text-2xl text-white sm:text-3xl">
-                Request Service
-              </h2>
-              <p className="mt-3 text-sm text-neutral-500">
-                Tell us what&apos;s going on and we&apos;ll get back to you.
-              </p>
-
-              <form className="mt-6 grid gap-5" action="#" method="post">
-                <label className="grid gap-2 text-sm font-medium text-neutral-300">
-                  Full Name
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Jane Smith"
-                    className="h-12 border border-rule bg-surface px-4 text-sm text-white placeholder:text-neutral-600"
-                  />
-                </label>
-
-                <label className="grid gap-2 text-sm font-medium text-neutral-300">
-                  Phone Number
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="(254) 555-0105"
-                    className="h-12 border border-rule bg-surface px-4 text-sm text-white placeholder:text-neutral-600"
-                  />
-                </label>
-
-                <label className="grid gap-2 text-sm font-medium text-neutral-300">
-                  Service Type
-                  <select
-                    name="serviceType"
-                    className="h-12 border border-rule bg-surface px-4 text-sm text-white"
-                  >
-                    <option>Emergency Plumbing</option>
-                    <option>Air Conditioning Repair</option>
-                    <option>Water Heater Service</option>
-                    <option>Drain &amp; Sewer Service</option>
-                    <option>General Contractor Service</option>
-                  </select>
-                </label>
-
-                <label className="grid gap-2 text-sm font-medium text-neutral-300">
-                  Service City
-                  <select
-                    name="city"
-                    className="h-12 border border-rule bg-surface px-4 text-sm text-white"
-                  >
-                    {siteConfig.areas.map((city) => (
-                      <option key={city}>{city}</option>
-                    ))}
-                  </select>
-                </label>
-
-                <label className="grid gap-2 text-sm font-medium text-neutral-300">
-                  What&apos;s happening?
-                  <textarea
-                    name="message"
-                    rows={4}
-                    placeholder="Describe the issue and urgency."
-                    className="border border-rule bg-surface px-4 py-3 text-sm text-white placeholder:text-neutral-600"
-                  />
-                </label>
-
-                <button
-                  type="submit"
-                  className="h-12 bg-gold text-sm font-bold text-black transition-colors hover:bg-gold-bright"
-                >
-                  Submit Request
-                </button>
-              </form>
-            </div>
           </div>
+
+          {/* Form */}
+          <ContactForm />
         </div>
-      </section>
+      </div>
+    </section >
+          </div >
+        </div >
+      </section >
 
       <CtaStrip />
 

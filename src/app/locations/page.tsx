@@ -7,8 +7,9 @@ import {
   buildBreadcrumbSchema,
   buildMetadata,
   buildWebPageSchema,
+  buildWebPageSchema,
 } from "@/lib/seo";
-import { locations } from "@/lib/site-data";
+import { getLocations } from "@/lib/sanity-fetch";
 
 export const metadata = buildMetadata({
   title: "Service Areas",
@@ -23,7 +24,8 @@ export const metadata = buildMetadata({
   ],
 });
 
-export default function LocationsPage() {
+export default async function LocationsPage() {
+  const locations = await getLocations();
   return (
     <>
       <PageHero

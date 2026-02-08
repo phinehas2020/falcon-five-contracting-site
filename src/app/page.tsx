@@ -7,7 +7,7 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { blogPosts, locations, services, siteConfig } from "@/lib/site-data";
+import { getBlogPosts, getLocations, getServices, siteConfig } from "@/lib/sanity-fetch";
 
 export const metadata = buildMetadata({
   title: "Emergency Plumbing & AC Repair in Waco, TX",
@@ -48,7 +48,10 @@ const homepageFaq = [
 const cityNames = siteConfig.areas;
 const marqueeItems = [...cityNames, ...cityNames, ...cityNames, ...cityNames];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const services = await getServices();
+  const locations = await getLocations();
+  const blogPosts = await getBlogPosts();
   return (
     <>
       {/* ─── HERO ─── */}
