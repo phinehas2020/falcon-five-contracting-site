@@ -24,12 +24,13 @@ export async function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
-params,
-}: BlogDetailPageProps): Promise < Metadata > {
+export async function generateMetadata({
+  params,
+}: BlogDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
 
-  if(!post) {
+  if (!post) {
     return buildMetadata({
       title: "Article Not Found",
       description: "Requested article was not found.",

@@ -7,7 +7,6 @@ import {
   buildBreadcrumbSchema,
   buildMetadata,
   buildWebPageSchema,
-  buildWebPageSchema,
 } from "@/lib/seo";
 import { getLocations } from "@/lib/sanity-fetch";
 

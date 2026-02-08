@@ -23,12 +23,13 @@ export async function generateStaticParams() {
   return locations.map((location) => ({ slug: location.slug }));
 }
 
-params,
-}: LocationDetailPageProps): Promise < Metadata > {
+export async function generateMetadata({
+  params,
+}: LocationDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const location = await getLocationBySlug(slug);
 
-  if(!location) {
+  if (!location) {
     return buildMetadata({
       title: "Location Not Found",
       description: "Requested location page was not found.",

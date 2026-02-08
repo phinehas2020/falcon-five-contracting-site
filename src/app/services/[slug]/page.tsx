@@ -25,12 +25,13 @@ export async function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
 }
 
-params,
-}: ServiceDetailPageProps): Promise < Metadata > {
+export async function generateMetadata({
+  params,
+}: ServiceDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const service = await getServiceBySlug(slug);
 
-  if(!service) {
+  if (!service) {
     return buildMetadata({
       title: "Service Not Found",
       description: "Requested service page was not found.",

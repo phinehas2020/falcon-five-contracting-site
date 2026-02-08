@@ -7,7 +7,6 @@ import {
   buildBreadcrumbSchema,
   buildMetadata,
   buildWebPageSchema,
-  buildWebPageSchema,
 } from "@/lib/seo";
 import { getBlogPosts } from "@/lib/sanity-fetch";
 
