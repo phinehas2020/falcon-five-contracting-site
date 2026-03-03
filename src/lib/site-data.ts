@@ -54,7 +54,7 @@ export const siteConfig = {
     "Waco",
     "Hewitt",
     "Bellmead",
-    "Belmade",
+    "Bellmead",
     "Woodway",
     "Robinson",
     "Lorena",
@@ -289,6 +289,7 @@ export const services: ServiceItem[] = [
   },
 ];
 
+
 export const locations: LocationItem[] = [
   {
     slug: "waco-tx",
@@ -445,3 +446,20 @@ export const getLocationBySlug = (slug: string) =>
 export const getBlogPostBySlug = (slug: string) =>
   blogPosts.find((post) => post.slug === slug);
 
+export const serviceDirectoryLinks = services.map((service) => ({
+  href: `/services/${service.slug}`,
+  label: service.name,
+  summary: service.shortDescription,
+}));
+
+export const locationDirectoryLinks = locations.map((location) => ({
+  href: `/locations/${location.slug}`,
+  label: `${location.city}, ${location.region}`,
+  summary: location.summary,
+}));
+
+export const blogDirectoryLinks = blogPosts.map((post) => ({
+  href: `/blog/${post.slug}`,
+  label: post.title,
+  summary: post.description,
+}));

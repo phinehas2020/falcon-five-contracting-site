@@ -1,6 +1,13 @@
 import Link from "next/link";
 
-import { navLinks, siteConfig } from "@/lib/site-data";
+import {
+  blogDirectoryLinks,
+  locationDirectoryLinks,
+  navLinks,
+  serviceDirectoryLinks,
+  siteConfig,
+} from "@/lib/site-data";
+import { LinkHub } from "@/components/link-hub";
 
 export function SiteFooter() {
   return (
@@ -67,6 +74,33 @@ export function SiteFooter() {
               </ul>
             </div>
           </div>
+        </div>
+
+        <div className="mt-14 grid gap-6 border-t border-rule pt-10 md:grid-cols-2">
+          <LinkHub
+            title="Services"
+            description="Fast links to the pages with the most emergency intent."
+            links={serviceDirectoryLinks.map((service) => ({
+              ...service,
+              summary: service.summary.split(".")[0],
+            }))}
+          />
+          <LinkHub
+            title="Service Areas"
+            description="Primary communities we currently prioritize in dispatch coverage."
+            links={locationDirectoryLinks.slice(0, 3).map((location) => ({
+              ...location,
+              summary: location.summary,
+            }))}
+          />
+        </div>
+
+        <div className="mt-6 border-t border-rule pt-6">
+          <LinkHub
+            title="Insights"
+            description="Local emergency guides and service explanations."
+            links={blogDirectoryLinks.slice(0, 4)}
+          />
         </div>
       </div>
 

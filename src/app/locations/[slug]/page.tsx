@@ -10,7 +10,11 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { getLocationBySlug, getLocations, getServices } from "@/lib/sanity-fetch";
+import {
+  getLocationBySlug,
+  getLocations,
+  getServices,
+} from "@/lib/sanity-fetch";
 
 type LocationDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -54,11 +58,32 @@ export default async function LocationDetailPage({
 }: LocationDetailPageProps) {
   const { slug } = await params;
   const location = await getLocationBySlug(slug);
+  const locations = await getLocations();
   const services = await getServices();
 
   if (!location) {
     notFound();
   }
+
+  const nearbyLinks = locations
+    .filter((entry) => location.nearby.includes(entry.city))
+    .filter((entry) => entry.slug !== location.slug)
+    .map((entry) => ({
+      href: `/locations/${entry.slug}`,
+      label: `${entry.city}, ${entry.region}`,
+      summary: entry.summary,
+    }));
+
+  const nearbyFallback = nearbyLinks.length
+    ? nearbyLinks
+    : locations
+        .filter((entry) => entry.slug !== location.slug)
+        .slice(0, 3)
+        .map((entry) => ({
+          href: `/locations/${entry.slug}`,
+          label: `${entry.city}, ${entry.region}`,
+          summary: entry.summary,
+        }));
 
   return (
     <>
@@ -78,6 +103,11 @@ export default async function LocationDetailPage({
                   Coverage in {location.city}
                 </h2>
                 <p className="mt-4 text-neutral-400">{location.summary}</p>
+                <p className="mt-4 text-sm text-neutral-400">
+                  This page uses city-specific routing language and local guidance
+                  so you can confirm if your property and issue match our normal
+                  emergency response pattern.
+                </p>
               </div>
 
               <div>
@@ -90,7 +120,10 @@ export default async function LocationDetailPage({
                       key={neighborhood}
                       className="flex items-start gap-3 text-neutral-400"
                     >
-                      <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                      <span
+                        className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                        aria-hidden="true"
+                      />
                       {neighborhood}
                     </li>
                   ))}
@@ -99,20 +132,23 @@ export default async function LocationDetailPage({
 
               <div>
                 <h2 className="text-2xl text-white sm:text-3xl">
-                  Emergency Response
+                  Emergency Response Checklist
                 </h2>
                 <ul className="mt-5 space-y-3">
                   {[
-                    "Active leaks and burst pipe containment",
-                    "No-cooling and unsafe indoor temperature response",
-                    "Main line drain and sewer interruption triage",
-                    "Critical plumbing and mechanical repair coordination",
+                    "Confirm property access and parking notes before technician dispatch.",
+                    "Document whether a hot-water shortage or no-cooling issue is affecting tenants.",
+                    "Keep utility shutoff and breaker access points visible.",
+                    "Call and provide photos only if it is safe to do so.",
                   ].map((item) => (
                     <li
                       key={item}
                       className="flex items-start gap-3 text-neutral-400"
                     >
-                      <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                      <span
+                        className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                        aria-hidden="true"
+                      />
                       {item}
                     </li>
                   ))}
@@ -144,15 +180,18 @@ export default async function LocationDetailPage({
                 <h2 className="text-xl text-white sm:text-2xl">
                   Nearby Communities
                 </h2>
-                <p className="mt-4 text-sm text-neutral-400">
-                  {location.nearby.join(" / ")}
-                </p>
-                <Link
-                  href="/locations"
-                  className="mt-4 inline-flex text-sm font-bold text-gold transition-colors hover:text-gold-bright"
-                >
-                  All locations
-                </Link>
+                <ul className="mt-5 space-y-3">
+                  {nearbyFallback.map((entry) => (
+                    <li key={entry.href}>
+                      <Link
+                        href={entry.href}
+                        className="text-sm text-neutral-400 transition-colors hover:text-gold"
+                      >
+                        {entry.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </aside>
           </div>

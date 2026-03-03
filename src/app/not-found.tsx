@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+import { locationDirectoryLinks, serviceDirectoryLinks } from "@/lib/site-data";
+import { LinkHub } from "@/components/link-hub";
+
 export default function NotFound() {
   return (
     <section className="border-b border-rule">
@@ -26,6 +29,19 @@ export default function NotFound() {
             Services
           </Link>
         </div>
+
+        <LinkHub
+          className="mt-10 border-t border-rule pt-10"
+          title="Start from popular pages"
+          description="When a URL is wrong, these are the most reliable sections to recover quickly."
+          links={locationDirectoryLinks.slice(0, 4)}
+        />
+        <LinkHub
+          className="mt-6"
+          title="Or jump by service"
+          description="If you came here from a broken service link, reselect from the directory."
+          links={serviceDirectoryLinks}
+        />
       </div>
     </section>
   );

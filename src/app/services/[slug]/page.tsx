@@ -12,7 +12,11 @@ import {
   buildServiceSchema,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { getServiceBySlug, getServices } from "@/lib/sanity-fetch";
+import {
+  getLocations,
+  getServiceBySlug,
+  getServices,
+} from "@/lib/sanity-fetch";
 
 type ServiceDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -52,11 +56,21 @@ export default async function ServiceDetailPage({
 }: ServiceDetailPageProps) {
   const { slug } = await params;
   const service = await getServiceBySlug(slug);
-  const services = await getServices(); // Fetch all services for the sidebar
+  const services = await getServices();
+  const locations = await getLocations();
 
   if (!service) {
     notFound();
   }
+
+  const sortedLocationLinks = locations
+    .filter(Boolean)
+    .map((entry) => ({
+      href: `/locations/${entry.slug}`,
+      label: `${entry.city}, ${entry.region}`,
+      summary: entry.summary,
+    }))
+    .slice(0, 5);
 
   return (
     <>
@@ -71,15 +85,18 @@ export default async function ServiceDetailPage({
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
             {/* Main content */}
             <div className="space-y-12">
-              {service.image && (
-                <div className="overflow-hidden border border-rule">
-                  <img
-                    src={service.image}
-                    alt={service.name}
-                    className="aspect-video w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-              )}
+              <div>
+                <h2 className="text-2xl text-white sm:text-3xl">
+                  Why this service is urgent
+                </h2>
+                <p className="mt-4 max-w-3xl text-neutral-400">
+                  {service.fullDescription} We pair fast response with practical
+                  diagnostics so we can confirm root cause, not just symptoms.
+                  Most calls are dispatched with a short intake checklist to
+                  prioritize safety and avoid unnecessary damage.
+                </p>
+              </div>
+
               <div>
                 <h2 className="text-2xl text-white sm:text-3xl">
                   What We Handle
@@ -90,7 +107,10 @@ export default async function ServiceDetailPage({
                       key={problem}
                       className="flex items-start gap-3 text-neutral-400"
                     >
-                      <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                      <span
+                        className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                        aria-hidden="true"
+                      />
                       {problem}
                     </li>
                   ))}
@@ -143,6 +163,24 @@ export default async function ServiceDetailPage({
             <aside className="space-y-8">
               <div className="border border-rule bg-surface-raised p-6 sm:p-8">
                 <h2 className="text-xl text-white sm:text-2xl">
+                  Available in these areas
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {sortedLocationLinks.map((entry) => (
+                    <li key={entry.href}>
+                      <Link
+                        href={entry.href}
+                        className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
+                      >
+                        {entry.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="border border-rule bg-surface-raised p-6 sm:p-8">
+                <h2 className="text-xl text-white sm:text-2xl">
                   More Services
                 </h2>
                 <ul className="mt-5 space-y-3">
@@ -165,7 +203,10 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      <CtaStrip />
+      <CtaStrip
+        title={`Need ${service.name.toLowerCase()} support now?`}
+        description={`Route dispatch and scheduling to ${service.name} specialists in Waco, Hewitt, Bellmead, and nearby communities.`}
+      />
 
       <JsonLd
         data={buildWebPageSchema({

@@ -1,4 +1,5 @@
 import { CtaStrip } from "@/components/cta-strip";
+import { LinkHub } from "@/components/link-hub";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import {
@@ -6,6 +7,10 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
+import {
+  locationDirectoryLinks,
+  serviceDirectoryLinks,
+} from "@/lib/site-data";
 
 export const metadata = buildMetadata({
   title: "About",
@@ -46,7 +51,10 @@ export default function AboutPage() {
                     key={item}
                     className="flex items-start gap-3 text-neutral-400"
                   >
-                    <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                    <span
+                      className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                      aria-hidden="true"
+                    />
                     {item}
                   </li>
                 ))}
@@ -68,7 +76,10 @@ export default function AboutPage() {
                     key={item}
                     className="flex items-start gap-3 text-neutral-400"
                   >
-                    <span className="mt-1.5 block size-1.5 shrink-0 bg-gold" aria-hidden="true" />
+                    <span
+                      className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                      aria-hidden="true"
+                    />
                     {item}
                   </li>
                 ))}
@@ -77,6 +88,73 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div>
+            <h2 className="text-2xl text-white sm:text-3xl">
+              Local-first service model
+            </h2>
+            <p className="mt-4 max-w-3xl text-neutral-400">
+              The way Falcon Five works is shaped by Central Texas demand cycles:
+              heat spikes in summer, freezes from rapid temperature swings, and
+              aging home infrastructure in established neighborhoods. We build the
+              same playbook for every city we cover, but every dispatch can look
+              different by property type and urgency.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            <div className="border border-rule bg-surface p-6 sm:p-8">
+              <h3 className="text-xl text-white sm:text-2xl">Service Priorities</h3>
+              <ul className="mt-5 space-y-3 text-sm text-neutral-400">
+                {[
+                  "Fast intake triage before recommendations or pricing talk.",
+                  "Issue containment for water, safety, and temperature risk first.",
+                  "Clear sequencing from diagnosis to closeout, with documentation.",
+                  "Follow-up guidance so maintenance lowers recurrence.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span
+                      className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                      aria-hidden="true"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="border border-rule bg-surface p-6 sm:p-8">
+              <h3 className="text-xl text-white sm:text-2xl">What “Done” Means</h3>
+              <p className="mt-4 text-sm text-neutral-400">
+                A job is done when the home is safe, the immediate issue is
+                stabilized, and the next decision is clear. Whether it&apos;s Waco in
+                summer heat or Bellmead in shoulder-season emergencies, we keep
+                the same priorities: reduce risk, keep costs predictable, and keep
+                communication clear.
+              </p>
+              <p className="mt-3 text-sm text-neutral-400">
+                If you are reading this from another city, we still use the same
+                team structure, but some service windows and response paths differ.
+                Use local area pages to verify routing and scope notes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <LinkHub
+        title="Explore Service Areas We Cover"
+        description="Use these pages to verify emergency lead times, local scope, and city-specific details before contacting dispatch."
+        links={locationDirectoryLinks.slice(0, 5)}
+      />
+
+      <LinkHub
+        title="Choose Your Required Service"
+        description="Each service page includes common scenarios, emergency checklists, FAQs, and related city guidance."
+        links={serviceDirectoryLinks}
+      />
 
       <CtaStrip />
 

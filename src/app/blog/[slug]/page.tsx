@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CtaStrip } from "@/components/cta-strip";
+import { LinkHub } from "@/components/link-hub";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import {
@@ -11,7 +12,12 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { getBlogPostBySlug, getBlogPosts } from "@/lib/sanity-fetch";
+import {
+  getBlogPostBySlug,
+  getBlogPosts,
+  getLocations,
+  getServices,
+} from "@/lib/sanity-fetch";
 
 type BlogDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -51,12 +57,15 @@ export default async function BlogDetailPage({
 }: BlogDetailPageProps) {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
-  const blogPosts = await getBlogPosts(); // Fetch all posts for sidebar
+  const blogPosts = await getBlogPosts();
+  const services = await getServices();
+  const locations = await getLocations();
 
   if (!post) {
     notFound();
   }
 
+  const keyword = post.targetKeyword.toLowerCase();
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -73,6 +82,26 @@ export default async function BlogDetailPage({
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
   };
 
+  const localServices = services.filter((service) =>
+    service.name.toLowerCase().split(" ").some((word) => word.length > 4 && keyword.includes(word)),
+  );
+
+  const localLocations = locations.filter((location) =>
+    keyword.includes(location.city.toLowerCase()),
+  );
+
+  const serviceLinks = (localServices.length ? localServices : services).slice(0, 3).map((service) => ({
+    href: `/services/${service.slug}`,
+    label: service.name,
+    summary: service.shortDescription,
+  }));
+
+  const locationLinks = (localLocations.length ? localLocations : locations).slice(0, 3).map((location) => ({
+    href: `/locations/${location.slug}`,
+    label: `${location.city}, ${location.region}`,
+    summary: location.summary,
+  }));
+
   return (
     <>
       <PageHero
@@ -82,7 +111,7 @@ export default async function BlogDetailPage({
       />
 
       <section className="border-b border-rule">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
             {/* Main content */}
             <div className="space-y-10">
@@ -97,8 +126,18 @@ export default async function BlogDetailPage({
 
               <div>
                 <h2 className="text-2xl text-white sm:text-3xl">
-                  Article Outline
+                  Article context for local homeowners
                 </h2>
+                <p className="mt-4 text-neutral-400">
+                  If this issue is happening today, focus on the two-step rule:
+                  reduce immediate risk, then secure accurate job details for
+                  dispatch. We use this approach across all service pages so you
+                  can be clear about what happened and what help is needed.
+                </p>
+                <p className="mt-3 text-neutral-400">
+                  The outline below follows the same order we use in field
+                  dispatch:
+                </p>
                 <ol className="mt-5 space-y-3">
                   {post.outline.map((line, i) => (
                     <li
@@ -114,37 +153,17 @@ export default async function BlogDetailPage({
                 </ol>
               </div>
 
-              <div>
-                <h2 className="text-2xl text-white sm:text-3xl">
-                  Internal Links
-                </h2>
-                <ul className="mt-5 space-y-3">
-                  <li>
-                    <Link
-                      href="/services/emergency-plumbing"
-                      className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
-                    >
-                      Emergency Plumbing
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/services/air-conditioning-repair"
-                      className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
-                    >
-                      Air Conditioning Repair
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/locations/waco-tx"
-                      className="text-sm font-medium text-neutral-400 transition-colors hover:text-gold"
-                    >
-                      Waco, TX Service Area
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+              <LinkHub
+                title="Related services to review"
+                description="Review these service pages for actionable checklists and city-level availability."
+                links={serviceLinks}
+              />
+
+              <LinkHub
+                title="Related service areas"
+                description="If location is part of the issue context, verify response language and nearby communities."
+                links={locationLinks}
+              />
             </div>
 
             {/* Sidebar */}

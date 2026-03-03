@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CtaStrip } from "@/components/cta-strip";
+import { LinkHub } from "@/components/link-hub";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import {
@@ -8,7 +9,10 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
-import { services } from "@/lib/site-data";
+import {
+  locationDirectoryLinks,
+  services,
+} from "@/lib/site-data";
 
 export const metadata = buildMetadata({
   title: "Contractor Services",
@@ -77,6 +81,37 @@ export default function ServicesPage() {
                   </div>
                 </div>
               </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8">
+          <h2 className="text-3xl text-white sm:text-4xl">
+            Local emergency coverage built by job type
+          </h2>
+          <p className="mt-4 max-w-3xl text-sm text-neutral-400 sm:text-base">
+            Every service is deployed differently based on location, urgency, and
+            property context. Use these pages to verify what happens in each city
+            before you call dispatch.
+          </p>
+          <LinkHub
+            className="mt-8"
+            title="Service Areas"
+            description="City pages include neighborhoods, response patterns, and expected arrival logic."
+            links={locationDirectoryLinks.slice(0, 5)}
+          />
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            {[
+              "Leak prevention and same-day mitigation for active plumbing calls",
+              "HVAC diagnostics when heat and safety thresholds are at risk",
+              "Water heater restoration and replacement planning for no-hot-water events",
+              "Drain and sewer troubleshooting to prevent repeat overflow calls",
+            ].map((item) => (
+              <div key={item} className="border border-rule bg-surface p-4 sm:p-5">
+                <p className="text-sm text-neutral-300">{item}</p>
+              </div>
             ))}
           </div>
         </div>

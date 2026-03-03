@@ -1,4 +1,5 @@
 import { CtaStrip } from "@/components/cta-strip";
+import { LinkHub } from "@/components/link-hub";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import {
@@ -6,6 +7,10 @@ import {
   buildMetadata,
   buildWebPageSchema,
 } from "@/lib/seo";
+import {
+  locationDirectoryLinks,
+  serviceDirectoryLinks,
+} from "@/lib/site-data";
 import { siteConfig } from "@/lib/site-data";
 import { ContactForm } from "@/components/contact-form";
 
@@ -112,6 +117,63 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <h2 className="text-2xl text-white sm:text-3xl">
+            Planning for emergency response
+          </h2>
+          <p className="mt-4 max-w-3xl text-neutral-400">
+            If an issue is active, call first. If it is safe and you want
+            scheduling help, use the form on the same page to request a visit.
+            Dispatch handles route planning once we confirm urgency.
+          </p>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            <div className="border border-rule bg-surface p-6 sm:p-8">
+              <h3 className="text-xl text-white sm:text-2xl">For active outages</h3>
+              <ul className="mt-5 space-y-3 text-sm text-neutral-400">
+                {[
+                  "Turn off exposed water sources if leaking.",
+                  "Clear people and pets from affected areas.",
+                  "Gather your address and access details for dispatch.",
+                  "Call your emergency line if power or gas lines may be affected.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span
+                      className="mt-1.5 block size-1.5 shrink-0 bg-gold"
+                      aria-hidden="true"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="border border-rule bg-surface p-6 sm:p-8">
+              <h3 className="text-xl text-white sm:text-2xl">After hours vs planned work</h3>
+              <p className="mt-4 text-sm text-neutral-400">
+                Our team triages by urgency. When a home or business can wait,
+                we still book scheduled support and prep material needs in advance.
+              </p>
+              <p className="mt-3 text-sm text-neutral-400">
+                That gives us room to optimize labor and pricing, but emergency
+                calls are still treated as first-priority when safety is
+                involved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <LinkHub
+        title="Browse Services and Areas"
+        description="Use these pages to prepare accurate details before you call or submit your request."
+        links={serviceDirectoryLinks}
+      />
+      <LinkHub
+        title="Local Coverage Areas"
+        description="Pick the city page that matches the property location for quickest dispatch context."
+        links={locationDirectoryLinks.slice(0, 5)}
+      />
 
       <CtaStrip />
 
