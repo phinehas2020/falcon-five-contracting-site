@@ -1,10 +1,28 @@
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { services, locations, blogPosts } from '@/lib/site-data';
 import { writeClient } from '@/sanity/lib/write-client';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
+        const expectedSecret = process.env.SEED_API_SECRET;
+        const bearerToken = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '');
+        const providedSecret = request.nextUrl.searchParams.get('secret') ?? bearerToken;
+
+        if (!expectedSecret) {
+            return NextResponse.json(
+                { success: false, error: 'Seeding is not configured on this environment.' },
+                { status: 503 }
+            );
+        }
+
+        if (providedSecret !== expectedSecret) {
+            return NextResponse.json(
+                { success: false, error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
         console.log('Seeding data...');
 
         // Services
@@ -12,15 +30,7 @@ export async function GET() {
             console.log(`Processing service: ${service.name}`);
             const existing = await writeClient.fetch(`*[_type == "service" && slug.current == $slug][0]`, { slug: service.slug });
             if (!existing) {
-                // Handle image upload if exists
-                let imageAsset;
-                if (service.image) {
-                    // In real scenario we'd fetch the image data from public folder and upload.
-                    // For now, let's skip image upload logic or simulate it if simple.
-                    // Actually, we can fetch local file if running server-side?
-                    // Or fetch from current running URL if available?
-                    // Let's stick to text data first.
-                }
+                // Handle image upload if needed in a future iteration.
 
                 await writeClient.create({
                     _type: 'service',
