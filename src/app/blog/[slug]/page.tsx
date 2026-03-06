@@ -65,7 +65,7 @@ export default async function BlogDetailPage({
     notFound();
   }
 
-  const keyword = post.targetKeyword.toLowerCase();
+  const keyword = (post.targetKeyword ?? "").toLowerCase();
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -82,13 +82,17 @@ export default async function BlogDetailPage({
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
   };
 
-  const localServices = services.filter((service) =>
-    service.name.toLowerCase().split(" ").some((word) => word.length > 4 && keyword.includes(word)),
-  );
+  const localServices = services.filter((service) => {
+    const serviceName = (service.name ?? "").toLowerCase();
+    return serviceName
+      .split(" ")
+      .some((word) => word.length > 4 && keyword.includes(word));
+  });
 
-  const localLocations = locations.filter((location) =>
-    keyword.includes(location.city.toLowerCase()),
-  );
+  const localLocations = locations.filter((location) => {
+    const city = (location.city ?? "").toLowerCase();
+    return city ? keyword.includes(city) : false;
+  });
 
   const serviceLinks = (localServices.length ? localServices : services).slice(0, 3).map((service) => ({
     href: `/services/${service.slug}`,
