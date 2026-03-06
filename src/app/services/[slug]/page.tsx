@@ -204,8 +204,8 @@ export default async function ServiceDetailPage({
       </section>
 
       <CtaStrip
-        title={`Need ${service.name.toLowerCase()} support now?`}
-        description={`Route dispatch and scheduling to ${service.name} specialists in Waco, Hewitt, Bellmead, and nearby communities.`}
+        title={`Need ${(service.name ?? "service").toLowerCase()} support now?`}
+        description={`Route dispatch and scheduling to ${service.name ?? "our"} specialists in Waco, Hewitt, Bellmead, and nearby communities.`}
       />
 
       <JsonLd
